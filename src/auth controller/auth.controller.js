@@ -14,7 +14,7 @@ const register = async (req, res) => {
             return res.send("User already exixts")
         } else {
             const user = await User.create(req.body)
-            // var token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
+            var token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
             return res.send ({user, token})
         }
     }
