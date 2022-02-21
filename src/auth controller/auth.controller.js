@@ -7,14 +7,14 @@ const register = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).send("error")
+            return res.status(400).send("email or password not valid or already in use")
         }
         const user = await User.findOne({email: req.body.email})
         if (user) {
             return res.send("User already exixts")
         } else {
             const user = await User.create(req.body)
-            var token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
+            // var token = jwt.sign({ user }, process.env.JWT_SECRET_KEY);
             return res.send ({user, token})
         }
     }

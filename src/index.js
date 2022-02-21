@@ -15,8 +15,14 @@ const app = express()
 // - a user can only see 10 posts at a time.
 // - a user can only like a post once and if he tries to like it again then it will get removed from likes count.
 
-app.post("/register", body("email").isEmail()., register)
-app.post("/login", login)
+app.post("/register",
+    body("email").isEmail(),
+    body("firstName").isEmpty().isAlpha().isLength({ min: 3 }, { max: 30 }),
+    register)
+
+
+app.post("/login", body("email").isEmail(), body("firstName").isEmpty().isAlpha().isLength({ min: 3 }, { max: 30 }), login)
+
 app.use("/user", userController)
 app.use("/post", postController)
 app.use("/comment", commentController)

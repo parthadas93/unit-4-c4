@@ -4,6 +4,7 @@ const User = require("../model/user.model")
 const path = require("path")
 const upload = require("../fileupload/file.upload")
 const fs = require("fs")
+const { createCipheriv } = require("crypto")
 
 router.post("", upload.array("profileImage"), async (req, res) => {
     try {
@@ -17,6 +18,14 @@ router.post("", upload.array("profileImage"), async (req, res) => {
         })
 
         return res.send(user)
+    } catch (e) {
+        console.log(e.message)
+    }
+})
+
+router.patch("/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new:true})
     } catch (e) {
         console.log(e.message)
     }
